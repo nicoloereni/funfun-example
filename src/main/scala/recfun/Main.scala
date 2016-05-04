@@ -1,0 +1,56 @@
+package recfun
+
+import scala.annotation.tailrec
+
+object Main {
+  def main(args: Array[String]) {
+    println("Pascal's Triangle")
+    for (row <- 0 to 10) {
+      for (col <- 0 to row)
+        print(pascal(col, row) + " ")
+      println()
+    }
+  }
+
+  /**
+   * Exercise 1
+   */
+  def pascal(c: Int, r: Int): Int = {
+
+    if (c == 0 || c == r)
+
+      1
+
+    else
+
+      pascal(c, r - 1) + pascal(c - 1, r - 1)
+
+  }
+
+  /**
+   * Exercise 2
+   */
+  def balance(chars: List[Char]): Boolean = {
+
+    @tailrec
+    def isBalanced(chars: List[Char], openParentheses: Int): Boolean = {
+      def haveAParentesesToClose: Boolean = {
+        openParentheses != 0
+      }
+      chars match {
+        case Nil => openParentheses == 0
+        case '(' :: t => isBalanced(chars.tail, openParentheses + 1)
+        case ')' :: t => (haveAParentesesToClose && isBalanced(chars.tail, openParentheses - 1))
+        case _  :: t => isBalanced(chars.tail, openParentheses)
+      }
+    }
+
+    isBalanced(chars, 0);
+
+  }
+
+  /**
+   * Exercise 3
+   */
+  def countChange(money: Int, coins: List[Int]): Int = ???
+}
